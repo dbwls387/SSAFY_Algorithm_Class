@@ -1,3 +1,5 @@
+// BOJ 1244ë²ˆ ìŠ¤ìœ„ì¹˜ ì¼œê³  ë„ê¸°
+
 package HW.D_0801;
 
 import java.io.BufferedReader;
@@ -6,50 +8,35 @@ import java.util.StringTokenizer;
 
 public class BOJ_1244 {
 
+	static int switch_cnt, student_cnt, gender, n;
+	static int[] arr;
+
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int switch_cnt = Integer.parseInt(br.readLine());
+		switch_cnt = Integer.parseInt(br.readLine());
 
-		// ½ºÀ§Ä¡ ÀÔ·Â
-		int[] arr = new int[switch_cnt + 1];
+		// ìŠ¤ìœ„ì¹˜ ì…ë ¥
+		arr = new int[switch_cnt + 1];
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		for (int i = 1; i <= switch_cnt; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
 		}
 
-		int student_cnt = Integer.parseInt(br.readLine()); // ÇĞ»ı ¼ö
+		student_cnt = Integer.parseInt(br.readLine()); // í•™ìƒ ìˆ˜
 		for (int i = 1; i <= student_cnt; i++) {
 			st = new StringTokenizer(br.readLine());
-			int gender = Integer.parseInt(st.nextToken());
-			int n = Integer.parseInt(st.nextToken());
+			gender = Integer.parseInt(st.nextToken());
+			n = Integer.parseInt(st.nextToken());
 
-			if (gender == 1) { // ³²ÇĞ»ıÀÌ¸é
-				for (int j = 1; j <= switch_cnt; j++) {
-					if (j % n == 0) { // ½ºÀ§Ä¡ ¹øÈ£°¡ ÀÚ±â°¡ ¹ŞÀº ¼öÀÇ ¹è¼öÀÌ¸é
-						arr[j] = (arr[j] == 1) ? 0 : 1;
-					}
-				}
-			} else { // ¿©ÇĞ»ıÀÌ¸é
-				int first = n;
-				int last = n;
-				for (int j = 1; j < (switch_cnt) / 2; j++) {
-					if (n - j < 1 || n + j > switch_cnt) {
-						break;
-					}
-					if (arr[n - j] == arr[n + j]) {
-						first = n - j;
-						last = n + j;
-					} else {
-						break;
-					}
-				}
-				for (int j = first; j <= last; j++) {
-					arr[j] = (arr[j] == 1) ? 0 : 1;
-				}
+			if (gender == 1) { // ë‚¨í•™ìƒì´ë©´
+				male();
+			} else { // ì—¬í•™ìƒì´ë©´
+				female();
 			}
 
 		}
 
+		// ê²°ê³¼ ì¶œë ¥
 		for (int i = 1; i <= switch_cnt; i++) {
 			System.out.print(arr[i] + " ");
 			if (i % 20 == 0) {
@@ -57,6 +44,28 @@ public class BOJ_1244 {
 			}
 		}
 
+	}
+
+	static void male() {
+		for (int j = n; j <= switch_cnt; j += n) {
+			if (j % n == 0) { // ìŠ¤ìœ„ì¹˜ ë²ˆí˜¸ê°€ ìê¸°ê°€ ë°›ì€ ìˆ˜ì˜ ë°°ìˆ˜ì´ë©´
+				arr[j] = (arr[j] == 1) ? 0 : 1;
+			}
+		}
+	}
+
+	static void female() {
+		arr[n] = arr[n] == 0 ? 1 : 0;
+		int cnt = 1;
+		while (n - cnt >= 1 && n + cnt <= switch_cnt) {
+			if (arr[n - cnt] == arr[n + cnt]) { // ê°™ìœ¼ë©´
+				arr[n - cnt] = arr[n - cnt] == 0 ? 1 : 0;
+				arr[n + cnt] = arr[n + cnt] == 0 ? 1 : 0;
+			} else {
+				break;
+			}
+			cnt++;
+		}
 	}
 
 }
