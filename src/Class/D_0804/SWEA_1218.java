@@ -1,6 +1,6 @@
 // 1218. [S/W 문제해결 기본] 4일차 - 괄호 짝짓기
 
-package basic;
+package Class.D_0804;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
