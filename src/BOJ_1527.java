@@ -1,3 +1,4 @@
+
 // BOJ 1527번 금민수의 개수
 
 import java.io.BufferedReader;
@@ -15,9 +16,19 @@ public class BOJ_1527 {
 		B = Integer.parseInt(st.nextToken());
 
 		gold(4);
+		gold(7);
+
+		System.out.println(cnt);
 	}
-	
+
 	static void gold(int n) {
-		
+		if (n > B) {
+			return;
+		} else if (n >= A) {
+			cnt++;
+		}
+
+		gold(n * 10 + 4);
+		gold(n * 10 + 7);
 	}
 }
