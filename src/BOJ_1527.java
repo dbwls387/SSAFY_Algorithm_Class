@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_1527 {
 
-	static int A, B, cnt = 0;
+	static long A, B, cnt = 0;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,7 +21,7 @@ public class BOJ_1527 {
 		System.out.println(cnt);
 	}
 
-	static void gold(int n) {
+	static void gold(long n) {
 		if (n > B) {
 			return;
 		} else if (n >= A) {
