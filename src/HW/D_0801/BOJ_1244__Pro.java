@@ -1,4 +1,4 @@
-package Class.D_0802;
+package HW.D_0801;
 
 // BOJ 1244번 스위치 켜고 끄기 
 
