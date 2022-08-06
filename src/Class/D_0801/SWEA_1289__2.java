@@ -1,11 +1,13 @@
+// SWEA 1289ë²ˆ ì›ìž¬ì˜ ë©”ëª¨ë¦¬ ë³µêµ¬í•˜ê¸° 
+
 package Class.D_0801;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class SWEA_1290__2 {
+public class SWEA_1289__2 {
 
 	// Scanner -> BufferedReader
-	// local º¯¼ö Áß ÁÖ¿ä º¯¼öµéÀ» -> static
+	// local ë³€ìˆ˜ ì¤‘ ì£¼ìš” ë³€ìˆ˜ë“¤ì„ -> static
 	// int[] -> char[]
 	// String toCharArray()
 
@@ -18,25 +20,25 @@ public class SWEA_1290__2 {
 		T = Integer.parseInt(br.readLine());
 
 		for (int t = 1; t <= T; t++) {
-			count = 0; // º¯°æ °Ç¼ö
+			count = 0; // ë³€ê²½ ê±´ìˆ˜
 
-			input = br.readLine().toCharArray(); // ¹è¿­À» »õ·Î »ý¼ºÇØ¼­ return
+			input = br.readLine().toCharArray(); // ë°°ì—´ì„ ìƒˆë¡œ ìƒì„±í•´ì„œ return
 
 			int cnt = input.length;
 
-			memory = new char[cnt]; // 0À¸·Î ÃÊ±âÈ­
+			memory = new char[cnt]; // 0ìœ¼ë¡œ ì´ˆê¸°í™”
 			for (int i = 0; i < cnt; i++) {
 				memory[i] = '0';
 			}
 
-			// µÎ ¹è¿­À» °°Àº index·Î ÀÌµ¿ÇÏ¸é¼­ °ªÀ» ºñ±³
+			// ë‘ ë°°ì—´ì„ ê°™ì€ indexë¡œ ì´ë™í•˜ë©´ì„œ ê°’ì„ ë¹„êµ
 			for (int i = 0; i < cnt; i++) {
 				if (memory[i] != input[i]) {
-					// memArray¸¦ µÚ±îÁö º¯°æ
+					// memArrayë¥¼ ë’¤ê¹Œì§€ ë³€ê²½
 					for (int j = i; j < cnt; j++) {
 						memory[j] = input[i];
 					}
-					count++; // º¯°æµÈ ¼ö Áõ°¡
+					count++; // ë³€ê²½ëœ ìˆ˜ ì¦ê°€
 				}
 			}
 

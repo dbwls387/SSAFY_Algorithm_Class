@@ -1,11 +1,13 @@
+// SWEA 1289ë²ˆ ì›ìž¬ì˜ ë©”ëª¨ë¦¬ ë³µêµ¬í•˜ê¸° 
+
 package Class.D_0801;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class SWEA_1290__3 {
+public class SWEA_1289__3 {
 
 	// Scanner -> BufferedReader
-	// local º¯¼ö Áß ÁÖ¿ä º¯¼öµéÀ» -> static
+	// local ë³€ìˆ˜ ì¤‘ ì£¼ìš” ë³€ìˆ˜ë“¤ì„ -> static
 	// int[] -> char[]
 	// String toCharArray()
 	
@@ -17,16 +19,16 @@ public class SWEA_1290__3 {
 		T = Integer.parseInt(br.readLine());
 
 		for (int t = 1; t <= T; t++) {
-			count = 0; // º¯°æ °Ç¼ö
+			count = 0; // ë³€ê²½ ê±´ìˆ˜
 
-			input = br.readLine().toCharArray();	// ¹è¿­À» »õ·Î »ý¼ºÇØ¼­ return 
+			input = br.readLine().toCharArray();	// ë°°ì—´ì„ ìƒˆë¡œ ìƒì„±í•´ì„œ return 
 			
-			// ÇöÀç ¹®ÀÚ 
+			// í˜„ìž¬ ë¬¸ìž 
 			char current = '0';
 
 			int cnt = input.length;
 
-			// ÇöÀçÀÇ °ª°ú input[i]¸¦ ºñ±³ÇØ¼­ ´Ù¸£¸é º¯°æÈ½¼ö°¡ Áõ°¡ÇÏ´Â ½ÃÁ¡ 
+			// í˜„ìž¬ì˜ ê°’ê³¼ input[i]ë¥¼ ë¹„êµí•´ì„œ ë‹¤ë¥´ë©´ ë³€ê²½íšŸìˆ˜ê°€ ì¦ê°€í•˜ëŠ” ì‹œì  
 			for (int i = 0; i < cnt; i++) {
 				if(input[i] != current) {
 					count++;

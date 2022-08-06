@@ -1,3 +1,5 @@
+// SWEA 1289ë²ˆ ì›ì¬ì˜ ë©”ëª¨ë¦¬ ë³µêµ¬í•˜ê¸°  
+
 package Class.D_0801;
 import java.util.Scanner;
 
@@ -20,29 +22,29 @@ public class SWEA_1289 {
 		 */
 
 		int T = sc.nextInt();
-		sc.nextLine(); // °³Çà¹®ÀÚ ÇØ¼Ò
+		sc.nextLine(); // ê°œí–‰ë¬¸ì í•´ì†Œ
 
 		for (int t = 0; t < T; t++) {
-			int count = 0; // º¯°æ °Ç¼ö
-			String str = sc.nextLine(); // °³Çà¹®ÀÚ±îÁö
-			// µÎ°³ÀÇ ¹è¿­
+			int count = 0; // ë³€ê²½ ê±´ìˆ˜
+			String str = sc.nextLine(); // ê°œí–‰ë¬¸ìê¹Œì§€
+			// ë‘ê°œì˜ ë°°ì—´
 			// 1. inputArray / 2. memArray
 			int cnt = str.length();
 			int[] inputArray = new int[cnt];
-			int[] memArray = new int[cnt]; // 0À¸·Î ÃÊ±âÈ­
+			int[] memArray = new int[cnt]; // 0ìœ¼ë¡œ ì´ˆê¸°í™”
 
 			for (int i = 0; i < cnt; i++) {
 				inputArray[i] = str.charAt(i) - 48; // -'0'
 			}
 
-			// µÎ ¹è¿­À» °°Àº index·Î ÀÌµ¿ÇÏ¸é¼­ °ªÀ» ºñ±³
+			// ë‘ ë°°ì—´ì„ ê°™ì€ indexë¡œ ì´ë™í•˜ë©´ì„œ ê°’ì„ ë¹„êµ
 			for (int i = 0; i < cnt; i++) {
 				if (memArray[i] != inputArray[i]) {
-					// memArray¸¦ µÚ±îÁö º¯°æ
+					// memArrayë¥¼ ë’¤ê¹Œì§€ ë³€ê²½
 					for (int j = i; j < cnt; j++) {
 						memArray[j] = inputArray[i];
 					}
-					count++; // º¯°æµÈ ¼ö Áõ°¡
+					count++; // ë³€ê²½ëœ ìˆ˜ ì¦ê°€
 				}
 			}
 
