@@ -1,5 +1,6 @@
 // SWEA 6808번 규영이와 인영이의 카드게임 - 교수님 풀이
 // next perm
+// 속도 좀 더 빠름 
 
 package Class.D_0809;
 
