@@ -19,11 +19,11 @@ public static void main(String[] args) throws Exception {
             String[] str = br.readLine().split("\\s+");
             System.out.println(Arrays.toString(str));
             if (str.length == 2) {
-                if (str[1].charAt(0) == '' || str[1].charAt(0) == '+' || str[1].charAt(0) == '-' || str[1].charAt(0) == '/') {
+                if (str[1].charAt(0) == ' ' || str[1].charAt(0) == '+' || str[1].charAt(0) == '-' || str[1].charAt(0) == '/') {
                     ans = 0;
                 }
             } else {
-                if (str[1].charAt(0) != '' && str[1].charAt(0) != '+' && str[1].charAt(0) != '-' && str[1].charAt(0) != '/') {
+                if (str[1].charAt(0) != ' ' && str[1].charAt(0) != '+' && str[1].charAt(0) != '-' && str[1].charAt(0) != '/') {
                     ans = 0;
                 }
             }
