@@ -8,7 +8,9 @@ import java.util.StringTokenizer;
 
 public class BOJ_1010 {
 
-	static int T, N, M;
+	static int T;
+	static double N, M, result;
+	static int[] dp;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,9 +21,25 @@ public class BOJ_1010 {
 
 			N = Integer.parseInt(st.nextToken());
 			M = Integer.parseInt(st.nextToken());
-			
-			
+
+			result = Comb(M, N);
+
+			System.out.printf("%.0f\n", result);
 		}
+	}
+
+	static double Comb(double n, double r) {
+		double a = 1;
+		double b = 1;
+
+		for (double i = n; i > n - r; i--) {
+			a *= i;
+		}
+		for (double i = r; i > 0; i--) {
+			b *= i;
+		}
+
+		return a / b;
 	}
 
 }
