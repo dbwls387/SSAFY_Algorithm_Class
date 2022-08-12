@@ -1,6 +1,6 @@
 // SWEA 5215번 햄버거 다이어트 
 
-package Class.D_0811;
+package HW.D_0811;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
