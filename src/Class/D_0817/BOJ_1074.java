@@ -1,6 +1,6 @@
 // BOJ 1074번 Z 
 
-package Class.D_0816;
+package Class.D_0817;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -20,17 +20,18 @@ public class BOJ_1074 {
 
 		int size, visit = 0;
 		while (N > 0) {
-			size = (int) Math.pow(2, (--N));
+			N--;
+			size = (int) Math.pow(2, (N));
 
-			if (r < size && c < size) {
+			if (r < size && c < size) { // 1사분면
 				visit += 0;
-			} else if (r < size && c >= size) {
+			} else if (r < size && c >= size) { // 2사분면
 				visit += size * size;
 				c -= size;
-			} else if (r >= size && c < size) {
+			} else if (r >= size && c < size) { // 3사분면
 				visit += size * size * 2;
 				r -= size;
-			} else {
+			} else { // 4사분면
 				visit += size * size * 3;
 				r -= size;
 				c -= size;
