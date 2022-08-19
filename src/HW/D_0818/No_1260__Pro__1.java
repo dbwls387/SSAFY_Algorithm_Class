@@ -1,4 +1,5 @@
 // BOJ 1260번 DFS와 BFS - 교수님 풀이 
+// 인접 행렬
 
 package HW.D_0818;
 
@@ -8,7 +9,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class No_1260__Pro {
+public class No_1260__Pro__1 {
 
 	static int N, M, V;
 	static boolean[][] matrix; // 방문할 수 있는 정점 관계
