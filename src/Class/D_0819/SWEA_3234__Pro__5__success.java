@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class SWEA_3234__Pro__5 {
+public class SWEA_3234__Pro__5__success {
 
 	static int T, N, ans;
 	static int[] choo;
