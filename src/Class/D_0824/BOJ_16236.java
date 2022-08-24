@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class No_16236 {
+public class BOJ_16236 {
 
 	static int N, min;
 	static int[][] map;
