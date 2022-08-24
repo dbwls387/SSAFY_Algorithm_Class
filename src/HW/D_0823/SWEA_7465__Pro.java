@@ -1,22 +1,19 @@
-// SWEA 7465번 창용 마을 무리의 개수 
+// SWEA 7465번 창용 마을 무리의 개수 - 교수님 풀이 
 
 package HW.D_0823;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashSet;
 import java.util.StringTokenizer;
+import java.util.TreeSet;
 
-public class SWEA_7465 {
+public class SWEA_7465__Pro {
 
-	static int T, N, M;
+	static int T, N, M, ans;
 	static int[] parent;
-	static HashSet<Integer> hs;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-
 		T = Integer.parseInt(br.readLine());
 
 		for (int t = 1; t <= T; t++) {
@@ -27,21 +24,23 @@ public class SWEA_7465 {
 			parent = new int[N + 1];
 			makeSet();
 
-			for (int m = 0; m < M; m++) {
+			// 관계 입력 처리 - union
+			for (int i = 0; i < M; i++) {
 				st = new StringTokenizer(br.readLine());
-				int a = Integer.parseInt(st.nextToken());
-				int b = Integer.parseInt(st.nextToken());
+				int x = Integer.parseInt(st.nextToken());
+				int y = Integer.parseInt(st.nextToken());
 
-				union(a, b);
+				union(x, y);
 			}
-			hs = new HashSet<Integer>();
+
+			// 무리의 수, 집합의 수 => parent[i] == i 개수 증가
+			ans = 0;
 			for (int i = 1; i <= N; i++) {
-				hs.add(findSet(i));
+				if (parent[i] == i)
+					ans++;
 			}
-
-			sb.append("#").append(t).append(" ").append(hs.size()).append("\n");
+			System.out.println("#" + t + " " + ans);
 		}
-		System.out.println(sb);
 	}
 
 	static void makeSet() {
