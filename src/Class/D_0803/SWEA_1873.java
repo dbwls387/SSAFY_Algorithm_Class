@@ -1,6 +1,6 @@
 // SWEA 1873번 상호의 배틀필드 
 
-package HW.D_0802;
+package Class.D_0803;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
