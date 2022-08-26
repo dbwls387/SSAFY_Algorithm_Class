@@ -4,55 +4,40 @@ package Class.D_0805;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.StringTokenizer;
 
 public class BOJ_2493 {
 
 	static int N;
-	static Stack<Integer> stack = new Stack<>();
-	static Stack<Integer> tmp = new Stack<>();
-	static Stack<Integer> ans = new Stack<>();
+	static Deque<int[]> stack = new ArrayDeque<>();
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
 
+		StringBuilder sb = new StringBuilder();
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < N; i++) {
-			stack.push(Integer.parseInt(st.nextToken()));
-		}
+		for (int i = 1; i <= N; i++) {
+			int height = Integer.parseInt(st.nextToken());
 
-		int last, i = 1;
-		while (stack.size() > 0) {
-			last = stack.pop();
-			while (i <= N) {
-				if (i == N) {
-					ans.push(0);
+			while (!stack.isEmpty()) {
+				if (stack.peek()[1] >= height) {
+					sb.append(stack.peek()[0]).append(' ');
 					break;
 				}
-				if (stack.peek() > last) {
-					ans.push(N - i);
-					tmpque();
-					break;
-				} else {
-					tmp.push(stack.pop());
-					i++;
-				}
-				i++;
+				stack.pop();
 			}
+
+			if (stack.isEmpty()) {
+				sb.append("0 ");
+			}
+
+			stack.push(new int[] { i, height });
 		}
-		ans.push(0);
-		while (ans.size() != 0) {
-			System.out.print(ans.pop() + " ");
-		}
+
+		System.out.println(sb);
 	}
 
-	static void tmpque() {
-		while (tmp.size() > 0) {
-			stack.push(tmp.pop());
-		}
-		tmp.clear();
-		return;
-	}
 }
