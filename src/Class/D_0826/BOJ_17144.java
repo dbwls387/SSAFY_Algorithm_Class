@@ -62,13 +62,6 @@ public class BOJ_17144 {
 			}
 		}
 
-		for (int i = 0; i < R; i++) {
-			for (int j = 0; j < C; j++) {
-				System.out.print(map[i][j] + " ");
-			}
-			System.out.println();
-		}
-
 		System.out.println(ans);
 	}
 
@@ -76,134 +69,108 @@ public class BOJ_17144 {
 
 		for (int time = 1; time <= T; time++) {
 
-			outer: while (!que.isEmpty()) {
-				int size = que.size();
+			int size = que.size();
+			int minusGive = 0;
+			for (int i = 0; i < size; i++) {
+				Node node = que.poll();
 
-				int minusGive = 0;
-				for (int i = 0; i < size; i++) {
-					Node node = que.poll();
+				if (node.t == time)
+					break;
 
-					if (node.t == time)
-						break outer;
+				for (int d = 0; d < 4; d++) {
+					int ny = node.y + dy[d];
+					int nx = node.x + dx[d];
 
-					for (int d = 0; d < 4; d++) {
-						int ny = node.y + dy[d];
-						int nx = node.x + dx[d];
+					if (ny < 0 || nx < 0 || ny >= R || nx >= C || map[ny][nx] == -1)
+						continue;
 
-						if (ny < 0 || nx < 0 || ny >= R || nx >= C || map[ny][nx] == -1)
-							continue;
-
-						cost[ny][nx] += map[node.y][node.x] / 5;
-						minusGive += map[node.y][node.x] / 5;
-						que.offer(new Node(ny, nx, node.t + 1));
-					}
-					cost[node.y][node.x] -= minusGive;
-					minusGive = 0;
+					cost[ny][nx] += map[node.y][node.x] / 5;
+					minusGive += map[node.y][node.x] / 5;
+					que.offer(new Node(ny, nx, node.t + 1));
 				}
+				cost[node.y][node.x] -= minusGive;
+				minusGive = 0;
+			}
 
-				for (int i = 0; i < R; i++) {
-					for (int j = 0; j < C; j++) {
-						map[i][j] += cost[i][j];
-						cost[i][j] = 0;
-					}
+			for (int i = 0; i < R; i++) {
+				for (int j = 0; j < C; j++) {
+					map[i][j] += cost[i][j];
+					cost[i][j] = 0;
 				}
 			}
 
 			// 공기청정기 순환 코드
 			rotate(); // 위쪽 청정기
 			downRotate(); // 아래쪽 청정기
+
+			que.clear();
+			for (int i = 0; i < R; i++) {
+				for (int j = 0; j < C; j++) {
+					if (map[i][j] > 0) {
+						que.offer(new Node(i, j, 0));
+					}
+				}
+			}
 		}
+
 	}
+
+	// 반시계 방향 인덱스 확인 용 델타 (우-하-좌-상)
+	static int[] dy_R1 = { 0, 1, 0, -1 };
+	static int[] dx_R1 = { 1, 0, -1, 0 };
 
 	static void rotate() {
-		int sy = 0, ey = cleanX[0]; // sy : 시작 y, ey : 종료 y
-		int sx = 0, ex = C - 1; // sx : 시작 x, ex : 종료 x
+		int x = 0;
+		int y = 0;
 
-		while (true) {
-			// 기저 조건
-			if (ey - sy < 1 || ex - sx < 1)
-				return;
+		int tmp = map[y][x];
 
-			// 반 시계 방향으로 이동
-			int temp = map[sy][sx]; // 첫 좌표 복사
+		int d = 0;
+		while (d < 4) {
+			int ny = y + dy_R1[d];
+			int nx = x + dx_R1[d];
 
-			// top 좌로 이동 (오른쪽의 값이 왼쪽의 값으로 이동)
-			for (int i = sx; i < ex; i++) {
-				map[sy][i] = map[sy][i + 1];
+			if (ny < 0 || nx < 0 || ny > cleanX[0] || nx >= C) {
+				d++;
+			} else {
+				map[y][x] = map[ny][nx];
+				y = ny;
+				x = nx;
 			}
-
-			// right 상으로 이동 ( 밑의 값이 위로 이동 )
-			for (int i = sy; i < ey; i++) {
-				map[i][ex] = map[i + 1][ex]; // 오른쪽 끝 x 고정
-			}
-
-			// bottom 우로 이동 (왼쪽의 값이 오른쪽으로 이동)
-			for (int i = ex; i > sx; i--) {
-				if (map[ey][i - 1] == -1)
-					continue;
-
-				map[ey][i] = map[ey][i - 1];
-			}
-
-			// left 하로 이동 ( 위의 값이 밑으로 이동 )
-			for (int i = ey; i > sy; i--) {
-				if (map[i][sx] == -1)
-					continue;
-				map[i][sx] = map[i - 1][sx];
-			}
-
-			map[sy + 1][sx] = temp;
-
-			// sy, ey, sx, ex 보정
-			sy += 1;
-			sx += 1;
-			ey -= 1;
-			ex -= 1;
 		}
-
+		map[1][0] = tmp;
+		map[cleanX[0]][1] = 0;
+		map[cleanX[0]][0] = -1;
 	}
 
+	// 시계 방향 인덱스 확인 용 델타
+	static int[] dy_R2 = { 0, 1, 0, -1 };
+	static int[] dx_R2 = { -1, 0, 1, 0 };
+
 	static void downRotate() {
-		int sy = 0, ey = R - 1; // sy : 시작 y, ey : 종료 y
-		int sx = cleanX[1], ex = C - 1; // sx : 시작 x, ex : 종료 x
 
-		while (true) {
-			// 기저 조건
-			if (sy - ey < 1 || sx - ex < 1)
-				return;
+		int x = C - 1;
+		int y = cleanX[1];
 
-			// 반 시계 방향으로 이동
-			int temp = map[sy][sx]; // 첫 좌표 복사
+		int tmp = map[y][x];
 
-			// top 좌로 이동 (오른쪽의 값이 왼쪽의 값으로 이동)
-			for (int i = sx; i < ex; i++) {
-				map[ey][i] = map[ey][i + 1];
+		int d = 0;
+		while (d < 4) {
+			int ny = y + dy_R2[d];
+			int nx = x + dx_R2[d];
+
+			if (ny < cleanX[1] || nx < 0 || ny >= R || nx >= C) {
+				d++;
+			} else {
+				map[y][x] = map[ny][nx];
+				y = ny;
+				x = nx;
 			}
-
-			// right 상으로 이동 ( 밑의 값이 위로 이동 )
-			for (int i = sy; i < ey; i++) {
-				map[i][ey] = map[i + 1][ey]; // 오른쪽 끝 x 고정
-			}
-
-			// bottom 우로 이동 (왼쪽의 값이 오른쪽으로 이동)
-			for (int i = ex; i > sx; i--) {
-				map[sy][i] = map[sy][i - 1];
-			}
-
-			// left 하로 이동 ( 위의 값이 밑으로 이동 )
-			for (int i = ey; i > sy; i--) {
-				map[i][ex] = map[i - 1][ex];
-			}
-
-			map[sy + 1][sx] = temp;
-
-			// sy, ey, sx, ex 보정
-			sy += 1;
-			sx += 1;
-			ey -= 1;
-			ex -= 1;
 		}
 
+		map[cleanX[1] + 1][C - 1] = tmp;
+		map[cleanX[1]][1] = 0;
+		map[cleanX[1]][0] = -1;
 	}
 
 	static class Node {
