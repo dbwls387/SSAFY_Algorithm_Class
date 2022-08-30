@@ -1,3 +1,5 @@
+// 알파벳
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
@@ -33,7 +35,7 @@ public class BOJ_1987 {
 	}
 
 	static void bfs() {
-		que.offer(new Node(0, 0, 1));
+		que.offer(new Node(0, 0, 0));
 		visit[map[0][0] - 'A'] = true;
 
 		while (!que.isEmpty()) {
