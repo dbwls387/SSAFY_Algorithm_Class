@@ -4,20 +4,15 @@ package Class.D_0824;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-import Class.D_0824.BOJ_7576.Node;
-
 public class BOJ_3055 {
 
-	static int R, C, time, result;
+	static int R, C, min, sx, sy;
 	static char[][] map;
-	static boolean[][] visited;
-	static Queue<Node> waterQ = new LinkedList<>();
+	static Queue<Node> waterQ = new ArrayDeque<>();
 
 	static int[] dy = { -1, 1, 0, 0 };
 	static int[] dx = { 0, 0, -1, 1 };
@@ -29,97 +24,88 @@ public class BOJ_3055 {
 		R = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 
-		int sx = 0, sy = 0;
 		map = new char[R][];
 		for (int i = 0; i < R; i++) {
 			map[i] = br.readLine().toCharArray();
 			for (int j = 0; j < C; j++) {
+				if (map[i][j] == '*') {
+					waterQ.add(new Node(i, j, 0));
+				}
 				if (map[i][j] == 'S') {
 					sy = i;
 					sx = j;
 				}
-
-				if (map[i][j] == '*')
-					waterQ.offer(new Node(i, j));
 			}
 		}
 
-		visited = new boolean[R][C];
-		time = 1;
-		result = 0;
-		bfs(sy, sx);
+		min = Integer.MAX_VALUE;
 
-		if (result == 1)
-			System.out.println(time);
-		else
-			System.out.println("KAKTUS");
+		bfs();
+
+		System.out.println(min);
+
 	}
 
-	static void bfs(int y, int x) {
-		Queue<Node> que = new LinkedList<>();
-		que.offer(new Node(y, x));
-		visited[y][x] = true;
+	static void bfs() {
+		Queue<Node> que = new ArrayDeque<>();
+		que.offer(new Node(sy, sx, 0));
 
-		// S 움직이기
 		while (!que.isEmpty()) {
-			// 물 퍼져나가기
-			int size = waterQ.size();
-			for (int i = 0; i < size; i++) {
+			// 물 채우기
+			int waterSize = waterQ.size();
+			for (int i = 0; i < waterSize; i++) {
 				Node water = waterQ.poll();
 
 				for (int d = 0; d < 4; d++) {
 					int ny = water.y + dy[d];
 					int nx = water.x + dx[d];
 
-					if (ny < 0 || nx < 0 || ny >= R || nx >= C || map[ny][nx] == 'X' || map[ny][nx] == '*'
-							|| map[ny][nx] == 'D')
+					if (ny < 0 || nx < 0 || ny >= R || nx >= C || map[ny][nx] == 'D' || map[ny][nx] == 'X')
 						continue;
 
-					map[ny][nx] = '*';
-					waterQ.offer(new Node(ny, nx));
+					if (map[ny][nx] == '.') {
+						map[ny][nx] = '*';
+						waterQ.offer(new Node(ny, nx, 0));
+					}
 				}
 			}
 
-			Node node = que.poll();
+			// 고슴도치
+			int gSize = que.size();
+			for (int i = 0; i < gSize; i++) {
+				Node node = que.poll();
 
-			for (int d = 0; d < 4; d++) {
-				int ny = node.y + dy[d];
-				int nx = node.x + dx[d];
+				for (int d = 0; d < 4; d++) {
+					int ny = node.y + dy[d];
+					int nx = node.x + dx[d];
 
-				if (ny < 0 || nx < 0 || ny >= R || nx >= C || visited[ny][nx])
-					continue;
+					if (ny < 0 || nx < 0 || ny >= R || nx >= C || map[ny][nx] == '*' || map[ny][nx] == 'X')
+						continue;
 
-				if (map[ny][nx] == 'D') {
-					result = 1;
-					return;
+					if (map[ny][nx] == 'D') {
+						min = Math.min(min, node.d + 1);
+						return;
+					}
+
+					if (map[ny][nx] == '.') {
+						map[ny][nx] = 'S';
+						map[node.y][node.x] = '.';
+						que.offer(new Node(ny, nx, node.d + 1));
+					}
 				}
-
-				if (map[ny][nx] == '.') {
-					time++;
-					map[ny][nx] = 'S';
-
-					que.offer(new Node(ny, nx));
-					visited[ny][nx] = true;
-
-				}
-			}
-
-			System.out.println("-------------------------");
-			for (int i = 0; i < R; i++) {
-				for (int j = 0; j < C; j++) {
-					System.out.print(map[i][j]);
-				}
-				System.out.println();
 			}
 		}
 	}
 
 	static class Node {
-		int y, x;
+		int y;
+		int x;
+		int d;
 
-		public Node(int y, int x) {
+		public Node(int y, int x, int d) {
 			this.y = y;
 			this.x = x;
+			this.d = d;
 		}
 	}
 
