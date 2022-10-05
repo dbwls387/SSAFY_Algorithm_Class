@@ -1,0 +1,109 @@
+// BOJ 2239번 스도쿠 - 교수님 풀이 
+
+package HW.D_1004;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+public class BOJ_2239__Pro {
+
+	static int[][] map = new int[9][9];
+	static ArrayList<Node> zero = new ArrayList<>();
+	static boolean complete = false;
+	static int size; // zero의 size => 0으로 미완성인 좌표 수
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		for (int i = 0; i < 9; i++) {
+			char[] tmp = br.readLine().toCharArray();
+			for (int j = 0; j < 9; j++) {
+				int n = map[i][j] = tmp[j] - '0';
+				map[i][j] = n;
+
+				if (n == 0) // 0 인 미완성 좌표를 zero에 담는다.
+					zero.add(new Node(i, j));
+			}
+		}
+
+		size = zero.size();
+		dfs(0); // 0 좌표 첫번째부터 채운다.
+	}
+
+	static void dfs(int idx) {
+		// 기저 조건
+		if (complete)
+			return;
+
+		// 기저 조건 - 완성
+		if (idx == size) {
+			complete = true;
+
+			// 완성된 스도쿠 출력
+			for (int i = 0; i < 9; i++) {
+				for (int j = 0; j < 9; j++) {
+					System.out.print(map[i][j]);
+				}
+				System.out.println();
+			}
+
+			return;
+		}
+
+		// 가로 -> 세로 -> 3x3 각각 이미 채워진 숫자를 제외한 숫자를 채워본다.
+
+		// 현재 채우려고 하는 0의 위치
+		int y = zero.get(idx).y;
+		int x = zero.get(idx).x;
+
+		// 이미 채워진 숫자를 표현하기 위한 자료 구조
+		boolean[] visit = new boolean[10]; // 0 dummy visit[3] == true (3이 이미 사용되었다. )
+
+		// 가로 부분
+		for (int i = 0; i < 9; i++) {
+			if (map[y][i] != 0)
+				visit[map[y][i]] = true;
+		}
+
+		// 세로 부분
+		for (int i = 0; i < 9; i++) {
+			if (map[i][x] != 0)
+				visit[map[i][x]] = true;
+		}
+
+		// 3x3 부분
+		// y: 5, x: 2
+		int ny = (y / 3) * 3;
+		int nx = (x / 3) * 3;
+
+		for (int i = ny; i < ny + 3; i++) {
+			for (int j = nx; j < nx + 3; j++) {
+				if (map[i][j] != 0)
+					visit[map[i][j]] = true;
+			}
+		}
+
+		// 현재 0인 (idx) y, x 좌표에 위에서 사용되지 않은 숫자 (visit 에 없는 숫자를 하나씩 넣어본다. )
+		// 1, 4, 6, 7 이 사용되었으면 2, 3, 5, 8, 9 숫자를 현재 y, x 좌표에 각각 채워보고 다시 다음 idx+1에 채우기 위해
+		// dfs() 이어간다.
+		for (int i = 1; i <= 9; i++) {
+			if (visit[i])
+				continue;
+			map[y][x] = i;
+			dfs(idx + 1);
+			map[y][x] = 0;
+		}
+	}
+
+	static class Node { // 0 인 (미완성) 좌표
+		int y;
+		int x;
+
+		Node(int y, int x) {
+			this.y = y;
+			this.x = x;
+		}
+	}
+
+}
