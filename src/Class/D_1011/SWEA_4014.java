@@ -4,7 +4,6 @@ package Class.D_1011;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class SWEA_4014 {
@@ -29,73 +28,61 @@ public class SWEA_4014 {
 				}
 			}
 
+			ans = 0;
 			for (int i = 0; i < N; i++) {
 				func(map[i]);
+
+				int[] arr = new int[N];
+				for (int j = 0; j < N; j++) {
+					arr[j] = map[j][i];
+				}
+				func(arr);
 			}
 
-			System.out.println(ans);
+			System.out.println("#" + t + " " + ans);
 		}
 
 	}
 
 	static void func(int[] arr) {
-
+		int j = 0;
 		int cnt = 0;
-		boolean start = false;
-		for (int i = 0; i < N - 1; i++) {
-			if (arr[i] - arr[i + 1] == 1) {
-				start = true;
-				cnt++;
-			}
-			if (start && arr[i] == arr[i + 1]) {
-				cnt++;
-			}
+		int height = arr[0];
 
-			if (i == N - 2 && cnt > 0) {
-				if (cnt < X) {
-					System.out.println(Arrays.toString(arr));
-					return;
-				}
-			}
-
-			if (arr[i] - arr[i + 1] == 1 && cnt > 0) {
+		while (j < N) {
+			if (height == arr[j]) {
+				cnt++;
+				j++;
+			} else if (height + 1 == arr[j]) {
 				if (cnt < X)
 					return;
+
+				height += 1;
+				cnt = 1;
+				j++;
+			} else if (height - 1 == arr[j]) {
+				int unCnt = 0;
+				for (int i = j; i < N; i++) {
+					if (arr[i] == height - 1) {
+						unCnt++;
+
+						if (unCnt == X)
+							break;
+					} else
+						break;
+				}
+				if (unCnt < X)
+					return;
 				else {
-					start = false;
+					j += X;
+					cnt = 0;
+					height -= 1;
 				}
 			} else {
 				return;
 			}
 		}
 
-		cnt = 0;
-		start = false;
-		for (int i = N - 1; i >= 1; i--) {
-			if (arr[i] - arr[i - 1] == 1) {
-				start = true;
-			}
-			if (start && arr[i] == arr[i - 1]) {
-				cnt++;
-			}
-			
-			if (i == 1 && cnt > 0) {
-				if (cnt < X)
-					return;
-			}
-			
-			if (arr[i] - arr[i - 1] == 1 && cnt > 0) {
-				if (cnt < X)
-					return;
-				else {
-					start = false;
-				}
-			} else {
-				return;
-			}
-		}
-
-		System.out.println(Arrays.toString(arr));
 		ans++;
 	}
 
